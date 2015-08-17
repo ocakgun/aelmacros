@@ -1,0 +1,27 @@
+defun octq(lay, hod, w, hopen) 
+{
+	
+	decl grid = 0.1;
+	decl context = de_get_current_design_context();
+	decl w_mks = w * db_get_mks_to_uu_factor(context);
+	decl hod_mks = hod * db_get_mks_to_uu_factor(context);
+	decl l_mks = (hod_mks - w_mks) / (1 + sqrt(2) / 2);
+	decl x_mks = sqrt(2) * l_mks / 2;
+	decl l = l_mks * db_get_uu_to_mks_factor(context);
+	decl x = x_mks * db_get_uu_to_mks_factor(context);
+	
+	de_set_layer(lay);          
+	
+	decl itemInfo0LP = de_init_item("Passsive_lib:octs:layout");	
+	de_place_item(itemInfo0LP, 0, x_mks);
+	de_set_item_parameters(itemInfo0LP, 
+		list(prm_ex("Passsive_lib","StdForm",lay),
+			prm_ex("Passsive_lib","StdForm", w),
+			prm_ex("Passsive_lib","StdForm", l)
+			));
+	de_end_edit_item(itemInfo0LP);
+	de_free_item(itemInfo0LP);
+
+	de_draw_rect(w+l, l+x, w+l+x, l+x+w);
+	de_draw_rect(0, hopen, w, x);
+}

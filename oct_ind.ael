@@ -1,0 +1,12 @@
+defun oct_ind(lay, w, s, od) 
+{
+	de_set_layer(lay);          
+	de_draw_rect(0.0, 0, w, s);
+	
+	de_add_polygon();
+	de_add_point(0,0);
+	de_add_point(20,0);
+	de_add_point(20,40);
+	de_add_point(0,0);
+	de_end();
+}

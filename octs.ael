@@ -1,0 +1,20 @@
+defun octs(lay, w, l) 
+{
+	decl grid = 0.1;
+	decl context = de_get_current_design_context();
+	decl w_mks = w * db_get_mks_to_uu_factor(context);
+	decl l_mks = l * db_get_mks_to_uu_factor(context);
+	de_set_layer(lay);          
+	
+	decl c = round(w_mks*tan(PI/8)/grid)*grid;
+	
+	de_add_polygon();
+	de_add_point(0,0);
+	de_add_point(w_mks,0);
+	de_add_point(w_mks+l_mks,l_mks);
+	de_add_point(w_mks+l_mks,w_mks+l_mks);	
+	de_add_point(w_mks+l_mks-c,w_mks+l_mks);
+	de_add_point(0,c);
+	de_add_point(0,0);	
+	de_end();
+}
